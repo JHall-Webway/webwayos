@@ -1,0 +1,26 @@
+ls
+c
+clear
+z Pro
+z nixos
+clear
+neofetch 
+clear
+ls ~/Desktop/
+ls
+ll
+ls al
+c
+clear
+ls *
+ls ~/.local/share/
+ls ~/.local/share/gnome-photos/
+c
+clear
+ls
+clear
+c
+nvim ~/.config/home-manager/home.nix
+z conf
+z ~/.config/
+ls
