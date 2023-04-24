@@ -6,6 +6,8 @@
     username = "jhall";
     homeDirectory = "/home/jhall";
     packages = with pkgs; [
+      lazygit
+      dmenu
       vimb
       nerdfonts
       nodejs
@@ -47,6 +49,12 @@
         init.defaultBranch = "master";
         core.editor = "nvim";
         web.browser = "firefox";
+      };
+    };
+    i3status-rust = { enable = true; 
+      bars.jhall = { 
+        theme = "gruvbox-dark";
+        icons = "gruvbox-dark";
       };
     };
     tmux = { enable = true;

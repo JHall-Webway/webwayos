@@ -27,7 +27,11 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-
+  environment.systemPackages = with pkgs; [
+    home-manager
+    neovim
+    git
+  ];
 
   users.users.jhall = { isNormalUser = true;
     description = "James Hall";
@@ -50,6 +54,7 @@
       };
       windowManager = {
         awesome.enable = true;
+        i3 = { enable = true; package = pkgs.i3-gaps; };
       };
       desktopManager = {
         # gnome.enable = true;
