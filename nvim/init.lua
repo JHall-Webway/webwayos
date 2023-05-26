@@ -5,11 +5,17 @@ vim.diagnostic.config{ virtual_text = false }
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require'lsp_lines'.setup()
-require'lualine'.setup()
+require'lualine'.setup{}
 require'lspconfig'.rnix.setup{ capabilities = capabilities }
 require'lspconfig'.lua_ls.setup { settings = { Lua = {
   runtime = { version = 'LuaJIT' },
-  diagnostics = { globals = { 'vim' }},
+  diagnostics = { globals = {
+    'vim',
+    'awesome',
+    'root',
+    'client',
+    'screen',
+  }},
   workspace = {
     library = vim.api.nvim_get_runtime_file("", true),
     checkThirdParty = false,
@@ -25,7 +31,7 @@ require'nvim-treesitter.configs'.setup{
 }
 
 local cmp = require'cmp'
-cmp.setup({
+cmp.setup{
   snippet = {
     expand = function(args)
       vim.fn["vsnip#anonymous"](args.body)
@@ -58,7 +64,7 @@ cmp.setup({
       end,
     }
   }
-})
+}
 cmp.setup.filetype('gitcommit', {
   sources = cmp.config.sources({
     { name = 'cmp_git' },

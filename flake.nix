@@ -1,16 +1,23 @@
 {
+  /* 
+    TODO:
+      Funnel stable to host system and unstable to local environment
+  */
   description = "hallwebway.net";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = { url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     };
   };
-  outputs = { nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations = {
       mars = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
-        modules = [ ./nixos/configuration.nix ];
+        modules = [
+          ./nixos/configuration.nix 
+          ./nixos/hardware-configuration.nix
+        ];
       };
     };    
     homeConfigurations = {

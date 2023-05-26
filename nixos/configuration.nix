@@ -8,6 +8,8 @@
     config.allowUnfree = true;
   };
 
+  hardware.keyboard.zsa.enable = true;
+
   time.timeZone = "America/Los_Angeles";
 
   i18n = { 
@@ -27,11 +29,7 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  environment.systemPackages = with pkgs; [
-    home-manager
-    neovim
-    git
-  ];
+  environment.systemPackages = with pkgs; [ home-manager ];
 
   users.users.jhall = { isNormalUser = true;
     description = "James Hall";
@@ -42,27 +40,26 @@
 
 
   sound.enable = true;
+  fonts.fonts = with pkgs; [
+    (nerdfonts.override { fonts = [ "Mononoki" ]; })
+  ];
 
   services = { 
     openssh.enable = true;
     xserver = { enable = true;
+      libinput.enable = true;
+      displayManager = {
+        sddm.enable = true;
+        defaultSession = "none+awesome";
+      };
+      windowManager.awesome = { enable = true;
+        luaModules = with pkgs.luaPackages; [
+          luarocks
+          luadbi-mysql
+        ];
+      };
       layout = "us";
       xkbVariant = "";
-      displayManager = { 
-        # gdm.enable = true;
-	sddm.enable = true;
-      };
-      windowManager = {
-        awesome.enable = true;
-        i3 = { enable = true; package = pkgs.i3-gaps; };
-      };
-      desktopManager = {
-        # gnome.enable = true;
-	plasma5.enable = true;
-      };
-    };
-    xrdp = { enable = true;
-      defaultWindowManager = "startplasma-x11";
     };
     pipewire = {
       enable = true;
@@ -75,6 +72,8 @@
 
   networking = {
     networkmanager.enable = true;
-    firewall.allowedTCPPorts = [ 3389 ];
+    firewall = { enable = true;
+      allowedTCPPorts = [ 3389 ];
+    };
   };
 }

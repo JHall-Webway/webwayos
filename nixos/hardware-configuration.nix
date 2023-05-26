@@ -2,6 +2,11 @@
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  environment.variables = {
+    GDK_SCALE = "2";
+    GDK_DPI_SCALE = "0.5";
+    JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
+  };
 
   system = {
     name = "mars";
@@ -13,6 +18,8 @@
   };
 
   swapDevices =[{ device = "/dev/disk/by-uuid/daffc091-786f-4317-8192-58393ad71ddb"; }];
+
+  services.xserver.dpi = 180;
 
   hardware = {
     bluetooth.enable = true;

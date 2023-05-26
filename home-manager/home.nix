@@ -6,10 +6,9 @@
     username = "jhall";
     homeDirectory = "/home/jhall";
     packages = with pkgs; [
+      alacritty
       lazygit
       dmenu
-      vimb
-      nerdfonts
       nodejs
       python3Full
       rustup
@@ -18,15 +17,14 @@
       rnix-lsp
       lua-language-server
       neofetch
-      libsForQt5.krdc
+      wally-cli
     ];
     shellAliases = {
       c = "clear";
-      system-switch = "sudo -i nixos-rebuild switch --flake $XDG_CONFIG_HOME#$hostname";
-      system-edit = "$EDITOR $XDG_CONFIG_HOME/nixos/configuration.nix";
-      home-switch = "home-manager switch --flake $XDG_CONFIG_HOME#$USER@$hostname";
-      home-edit = "$EDITOR $XDG_CONFIG_HOME/home-manager/home.nix";
     };
+  };
+  xsession = { enable = true;
+    windowManager.awesome = { enable = true; };
   };
   xdg = { enable = true;
     userDirs = { enable = true;
@@ -49,12 +47,6 @@
         init.defaultBranch = "master";
         core.editor = "nvim";
         web.browser = "firefox";
-      };
-    };
-    i3status-rust = { enable = true; 
-      bars.jhall = { 
-        theme = "gruvbox-dark";
-        icons = "gruvbox-dark";
       };
     };
     tmux = { enable = true;
@@ -108,7 +100,7 @@
 	nvim-web-devicons
         lualine-nvim
         lualine-lsp-progress
-	nvim-treesitter.withAllGrammars
+	(nvim-treesitter.withPlugins (p: [ p.c p.javascript p.lua p.nix ]))
 	vim-nix
         nvim-lspconfig
         lspkind-nvim
