@@ -3,10 +3,7 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  nixpkgs = { 
-    hostPlatform = lib.mkDefault "x86_64-linux";
-    config.allowUnfree = true;
-  };
+  nixpkgs.config.allowUnfree = true;
 
   hardware.keyboard.zsa.enable = true;
 
@@ -29,7 +26,7 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  environment.systemPackages = with pkgs; [ home-manager ];
+  environment.systemPackages = with pkgs; [ k3s home-manager ];
 
   users.users.jhall = { isNormalUser = true;
     description = "James Hall";
@@ -45,6 +42,7 @@
   ];
 
   services = { 
+    k3s.enable = true;
     openssh.enable = true;
     xserver = { enable = true;
       libinput.enable = true;
@@ -72,8 +70,13 @@
 
   networking = {
     networkmanager.enable = true;
+    extraHosts = ''
+      192.168.0.33  mars
+      192.168.0.17  terra
+      192.168.0.22  armegeddon
+    '';
     firewall = { enable = true;
-      allowedTCPPorts = [ 3389 ];
+      allowedTCPPorts = [ 6443 3389 ];
     };
   };
 }

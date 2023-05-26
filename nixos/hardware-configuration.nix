@@ -2,6 +2,7 @@
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   environment.variables = {
     GDK_SCALE = "2";
     GDK_DPI_SCALE = "0.5";
@@ -20,6 +21,7 @@
   swapDevices =[{ device = "/dev/disk/by-uuid/daffc091-786f-4317-8192-58393ad71ddb"; }];
 
   services.xserver.dpi = 180;
+  services.k3s.role = "server";
 
   hardware = {
     bluetooth.enable = true;
